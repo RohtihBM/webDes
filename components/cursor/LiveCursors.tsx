@@ -1,19 +1,11 @@
 import Cursor from "./Cursor";
 import { COLORS } from "@/constants";
-import { useOthers } from "@liveblocks/react";
-
-type CursorType = {
-  x: number;
-  y: number;
-};
+import { LiveCursorProps } from "@/types/type";
 
 // display all other live cursors
-const LiveCursors = () => {
-  const others = useOthers();
+const LiveCursors = ({ others }: LiveCursorProps) => {
   return others.map(({ connectionId, presence }) => {
-    const cursor = presence?.cursor as CursorType | undefined;
-
-    if (!cursor) {
+    if (presence == null || !presence?.cursor) {
       return null;
     }
 
@@ -21,9 +13,9 @@ const LiveCursors = () => {
       <Cursor
         key={connectionId}
         color={COLORS[Number(connectionId) % COLORS.length]}
-        x={cursor.x}
-        y={cursor.y}
-        message={presence.message || ""}
+        x={presence.cursor.x}
+        y={presence.cursor.y}
+        message={presence.message}
       />
     );
   });
