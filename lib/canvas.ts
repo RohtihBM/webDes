@@ -343,25 +343,42 @@ export const renderCanvas = ({
   // clear canvas
   fabricRef.current?.clear();
 
-  if (canvasObjects) {
-    // render all objects on canvas
-    Array.from(canvasObjects, ([objectId, objectData]) => {
-      fabric.util.enlivenObjects(
-        [objectData],
-        (enlivenedObjects: fabric.Object[]) => {
-          enlivenedObjects.forEach((enlivenedObj) => {
-            if (activeObjectRef.current?.objectId === objectId) {
-              fabricRef.current?.setActiveObject(enlivenedObj);
-            }
-            fabricRef.current?.add(enlivenedObj);
-          });
-        },
-        "fabric"
-      );
-    });
+  // render all objects on canvas
+  Array.from(canvasObjects, ([objectId, objectData]) => {
+    /**
+     * enlivenObjects() is used to render objects on canvas.
+     * It takes two arguments:
+     * 1. objectData: object data to render on canvas
+     * 2. callback: callback function to execute after rendering objects
+     * on canvas
+     *
+     * enlivenObjects: http://fabricjs.com/docs/fabric.util.html#.enlivenObjectEnlivables
+     */
+    fabric.util.enlivenObjects(
+      [objectData],
+      (enlivenedObjects: fabric.Object[]) => {
+        enlivenedObjects.forEach((enlivenedObj) => {
+          // if element is active, keep it in active state so that it can be edited further
+          if (activeObjectRef.current?.objectId === objectId) {
+            fabricRef.current?.setActiveObject(enlivenedObj);
+          }
 
-    fabricRef.current?.renderAll();
-  }
+          // add object to canvas
+          fabricRef.current?.add(enlivenedObj);
+        });
+      },
+      /**
+       * specify namespace of the object for fabric to render it on canvas
+       * A namespace is a string that is used to identify the type of
+       * object.
+       *
+       * Fabric Namespace: http://fabricjs.com/docs/fabric.html
+       */
+      "fabric"
+    );
+  });
+
+  fabricRef.current?.renderAll();
 };
 
 // resize canvas dimensions on window resize

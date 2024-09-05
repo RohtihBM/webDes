@@ -1,37 +1,55 @@
-import React, { useMemo } from "react";
-import Avatar from "./Avatar"; // Ensure correct import path
-import { useOthers, useSelf } from "@liveblocks/react";
-import styles from "../Reaction/index.module.css";
+"use client";
+
+import { useMemo } from "react";
+
+import { generateRandomName } from "@/lib/utils";
+import { useOthers, useSelf } from "@/liveblocks.config";
+
+import Avatar from "./Avatar";
 
 const ActiveUsers = () => {
-  const users = useOthers(); // Call the hook to get the actual value
-  const currUser = useSelf();
-  const hasMoreUsers = users.length > 3;
+  /**
+   * useOthers returns the list of other users in the room.
+   *
+   * useOthers: https://liveblocks.io/docs/api-reference/liveblocks-react#useOthers
+   */
+  const others = useOthers();
 
-  // Memoize the JSX to avoid unnecessary re-renders
-  const memoisedUsers = useMemo(
-    () => (
-      <div className="flex items-center gap-1 justify-center py-2">
-        <div className="flex pl-3">
-          {currUser && (
-            <Avatar
-              name="you"
-              otherStyles="border-[3px] border-primary-green"
-            />
-          )}
-          {users.slice(0, 3).map(({ connectionId }) => (
-            <Avatar key={connectionId} name="others" otherStyles="-ml-3" />
-          ))}
-          {hasMoreUsers && (
-            <div className={styles.more}>+{users.length - 3}</div>
-          )}
-        </div>
+  /**
+   * useSelf returns the current user details in the room
+   *
+   * useSelf: https://liveblocks.io/docs/api-reference/liveblocks-react#useSelf
+   */
+  const currentUser = useSelf();
+
+  // memoize the result of this function so that it doesn't change on every render but only when there are new users joining the room
+  const memoizedUsers = useMemo(() => {
+    const hasMoreUsers = others.length > 2;
+
+    return (
+      <div className="flex items-center justify-center gap-1">
+        {currentUser && (
+          <Avatar name="You" otherStyles="border-[3px] border-primary-green" />
+        )}
+
+        {others.slice(0, 2).map(({ connectionId }) => (
+          <Avatar
+            key={connectionId}
+            name={generateRandomName()}
+            otherStyles="-ml-3"
+          />
+        ))}
+
+        {hasMoreUsers && (
+          <div className="z-10 -ml-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary-black">
+            +{others.length - 2}
+          </div>
+        )}
       </div>
-    ),
-    [users.length]
-  );
+    );
+  }, [others.length]);
 
-  return memoisedUsers;
+  return memoizedUsers;
 };
 
 export default ActiveUsers;

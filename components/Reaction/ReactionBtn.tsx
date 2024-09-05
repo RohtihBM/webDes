@@ -3,10 +3,6 @@ import React from "react";
 type Props = {
   setReaction: (reaction: string) => void;
 };
-type ReactionButtonProps = {
-  reaction: string;
-  onSelect: (reaction: string) => void;
-};
 
 const ReactionSelector = ({ setReaction }: Props) => (
   <div
@@ -21,6 +17,11 @@ const ReactionSelector = ({ setReaction }: Props) => (
     <ReactionButton reaction="🙁" onSelect={setReaction} />
   </div>
 );
+
+type ReactionButtonProps = {
+  reaction: string;
+  onSelect: (reaction: string) => void;
+};
 
 const ReactionButton = ({ reaction, onSelect }: ReactionButtonProps) => (
   <button

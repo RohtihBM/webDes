@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 
 export default function useInterval(callback: () => void, delay: number) {
   const savedCallback = useRef<() => void>(callback);
-  //ensures that the callback function always references the latest state of the application (including cursorState and cursor positions).
 
   // Remember the latest callback.
   useEffect(() => {

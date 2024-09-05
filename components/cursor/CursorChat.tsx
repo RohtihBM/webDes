@@ -17,15 +17,14 @@ const CursorChat = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // if (e.key === "Enter") {
-    //   setCursorState({
-    //     mode: CursorMode.Chat,
-    //     // @ts-ignore
-    //     previousMessage: cursorState.message,
-    //     message: "",
-    //   });
-    // } else
-    if (e.key === "Escape") {
+    if (e.key === "Enter") {
+      setCursorState({
+        mode: CursorMode.Chat,
+        // @ts-ignore
+        previousMessage: cursorState.message,
+        message: "",
+      });
+    } else if (e.key === "Escape") {
       setCursorState({
         mode: CursorMode.Hidden,
       });
@@ -58,9 +57,9 @@ const CursorChat = ({
              * We're doing this because when user press enter, we want to
              * show the previous message at top and the input at bottom
              */}
-            {/* {cursorState.previousMessage && (
+            {cursorState.previousMessage && (
               <div>{cursorState.previousMessage}</div>
-            )} */}
+            )}
             <input
               className="z-10 w-60 border-none	bg-transparent text-white placeholder-blue-300 outline-none"
               autoFocus={true}

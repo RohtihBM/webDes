@@ -19,10 +19,7 @@ import {
   renderCanvas,
 } from "@/lib/canvas";
 import { handleDelete, handleKeyDown } from "@/lib/key-events";
-import LeftSidebar from "@/components/index/LeftSidebar";
-import Live from "@/components/index/Live";
-import Navbar from "@/components/index/Navbar";
-import RightSidebar from "@/components/index/RightSidebar";
+import { LeftSidebar, Live, Navbar, RightSidebar } from "@/components/index";
 import { handleImageUpload } from "@/lib/shapes";
 import { defaultNavElement } from "@/constants";
 import { ActiveElement, Attributes } from "@/types/type";
