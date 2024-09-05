@@ -1,0 +1,44 @@
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border: 4px solid #fff;
+  border-radius: 9999px;
+  width: 56px;
+  height: 56px;
+  background-color: #9ca3af;
+  margin-left: -0.75rem;
+}
+
+.avatar_picture {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px; /* Ensure the image is also rounded */
+}
+
+.avatar:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  padding: 5px 10px;
+  color: white;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.75
+  ); /* Optional: for better tooltip visibility */
+  border-radius: 4px; /* Optional: for better tooltip styling */
+  white-space: nowrap; /* Ensure the tooltip text is in a single line */
+  pointer-events: none; /* Prevent the tooltip from blocking cursor events */
+}
+
+.avatar:hover:before {
+  opacity: 1;
+}

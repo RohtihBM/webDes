@@ -1,0 +1,33 @@
+.avatar {
+  display: flex;
+  justify-content: center; /* Changed from place-content to justify-content */
+  align-items: center; /* Ensures the content is vertically centered */
+  position: relative;
+  border: 4px solid #fff;
+  border-radius: 9999px;
+  width: 56px;
+  height: 56px;
+  background-color: #9ca3af;
+  margin-left: -0.75rem;
+}
+
+.avatar_picture {
+  object-fit: cover; /* Ensures the image covers the area of the avatar */
+}
+
+.avatar:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  padding: 5px 10px;
+  color: white;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.75
+  ); /* Optional: for better tooltip visibility */
+  border-radius: 4px; /* Optional: for better tooltip styling */
+}
