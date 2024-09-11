@@ -30,6 +30,7 @@ const Navbar = ({
             key={item.name}
             onClick={() => {
               if (Array.isArray(item.value)) return;
+              ``;
               handleActiveElement(item);
             }}
             className={`group px-2.5 py-5 flex justify-center items-center
