@@ -15,9 +15,10 @@ type Props = {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   undo: () => void;
   redo: () => void;
+  activeElement: any;
 };
 
-const Live = ({ canvasRef, undo, redo }: Props) => {
+const Live = ({ canvasRef, undo, redo, activeElement }: Props) => {
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const [cursorState, setCursorState] = useState<CursorState>({
     mode: CursorMode.Hidden,
@@ -80,8 +81,10 @@ const Live = ({ canvasRef, undo, redo }: Props) => {
         updateMyPresence({ message: "" });
         setCursorState({ mode: CursorMode.Hidden });
       } else if (e.key === "e") {
-        setCursorState({ mode: CursorMode.ReactionSelector });
-      }
+        // Only activate ReactionSelector if nothing in the navbar is selected
+        if (!activeElement) {
+          setCursorState({ mode: CursorMode.ReactionSelector });
+        }
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
